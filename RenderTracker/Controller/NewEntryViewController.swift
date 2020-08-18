@@ -10,28 +10,73 @@ import UIKit
 
 class NewEntryViewController: UIViewController {
 
-	@IBOutlet weak var tempEntryName: UISearchBar!
+	@IBOutlet weak var searchBar: UISearchBar!
 	
 	@IBOutlet weak var imageDisplay: UIImageView!
+		
+	var previousSearch: String?
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
 	
 	override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
 		guard let key = presses.first?.key else { return }
 
 		switch key.keyCode {
-			case .keyboardReturnOrEnter:
-				if let validSearch = tempEntryName.text {
-					let testAPI = PictureAPI()
-					testAPI.pictureSearch(this: validSearch)
-					loadPicture(from: Int.random(in: 0..<PictureResults.shared.hits!.count), at: imageDisplay)
-				}
-			default:
-				super.pressesEnded(presses, with: event)
+		case .keyboardReturnOrEnter:
+			if let validSearch = searchBar.text {
+				let formattedSearch = formatSearchTerms(from: validSearch)
+					if formattedSearch.count > 0 {
+						if previousSearch != formattedSearch {
+							makeSearch(this: formattedSearch)
+							previousSearch = formattedSearch
+						} else if PictureResults.shared.hits!.count > 0 {
+							loadPicture(from: Int.random(in: 0..<PictureResults.shared.hits!.count), at: imageDisplay)
+						}
+					}
+			}
+		default:
+			super.pressesEnded(presses, with: event)
 		}
+	}
+	
+	@IBAction func newEntryDone(_ sender: Any) {
+//		let date = Date()
+//		let dateFormatter = DateFormatter()
+//		dateFormatter.dateFormat = "dd/MM/yyyy"
+//
+//		let _ = Entry(title: tempEntryName.text!, date: dateFormatter.string(from: date))
+	}
+	
+	@IBAction func refreshSearch(_ sender: Any) {
+		if previousSearch != nil {
+			loadPicture(from: Int.random(in: 0..<PictureResults.shared.hits!.count), at: imageDisplay)
+		}
+	}
+	
+	func formatSearchTerms(from str: String) -> String {
+		var formattedTerms = ""
+		
+		for (num, char) in str.enumerated() {
+			
+			if char == " " {
+				if num != 0 && num != str.count-1 {
+					formattedTerms.append("+")
+				}
+			} else {
+				formattedTerms.append(char.lowercased())
+			}
+		}
+		
+		return formattedTerms
+	}
+	
+	func makeSearch(this str: String) {
+		
+		let imageAPI = PictureAPI()
+		imageAPI.pictureSearch(this: str)
+		loadPicture(from: Int.random(in: 0..<PictureResults.shared.hits!.count), at: imageDisplay)
 	}
 	
 	func loadPicture(from num: Int, at img: UIImageView) {
@@ -43,14 +88,6 @@ class NewEntryViewController: UIViewController {
 
 			}
 		}
-	}
-	
-	@IBAction func newEntryDone(_ sender: Any) {
-//		let date = Date()
-//		let dateFormatter = DateFormatter()
-//		dateFormatter.dateFormat = "dd/MM/yyyy"
-//
-//		let _ = Entry(title: tempEntryName.text!, date: dateFormatter.string(from: date))
 	}
 	
     /*

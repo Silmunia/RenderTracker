@@ -15,7 +15,7 @@ class PictureAPI {
     // MARK: API Request
     
 	func pictureSearch(this str: String) {
-        
+		
         let url = URL(string: "https://pixabay.com/api/?key=\(keyAPI)&q=\(str)&image_type=photo")
         let semaphore = DispatchSemaphore(value: 0)
         

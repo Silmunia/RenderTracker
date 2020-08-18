@@ -94,6 +94,17 @@
                                 <rect key="frame" x="35" y="263" width="345" height="371"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FU5-qa-bcE">
+                                <rect key="frame" x="0.0" y="818" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem systemItem="refresh" id="cdQ-we-XFW">
+                                        <connections>
+                                            <action selector="refreshSearch:" destination="mVy-h3-xAA" id="t6Z-qC-0wg"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="cPx-5b-SxO"/>
@@ -107,7 +118,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="imageDisplay" destination="SvR-dP-YSw" id="mse-so-lHh"/>
-                        <outlet property="tempEntryName" destination="wlE-2e-bY8" id="QNf-VA-MhE"/>
+                        <outlet property="searchBar" destination="wlE-2e-bY8" id="v53-r5-hNU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="djc-2z-6E9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
