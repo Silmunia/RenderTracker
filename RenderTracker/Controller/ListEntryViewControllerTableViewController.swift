@@ -8,28 +8,24 @@
 
 import UIKit
 
-struct Entry {
-	var title: String
-	var date: String
-}
+//struct Entry: Codable {
+//	var title: String
+//	var date: String
+//	var imgReference: URL
+//	var imgModel: URL?
+//}
 
 class ListEntryTableViewController: UITableViewController {
 
-	var entries = [Entry]()
-	var newEntry = Entry(title: "", date: "")
+	var entries: [[String: String]] = []
 	
+	override func viewWillAppear(_ animated: Bool) {
+		entries = UserDefaults.standard.array(forKey: "archive-entries") as? [[String: String]] ?? [[String: String]]()
+		tableView.reloadData()
+	}
+		
     override func viewDidLoad() {
         super.viewDidLoad()
-
-		let date = Date()
-		let dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = "dd/MM/yyyy"
-		
-		let entryA = Entry(title: "Entry A", date: dateFormatter.string(from: date))
-		let entryB = Entry(title: "Entry B", date: dateFormatter.string(from: date))
-		let entryC = Entry(title: "Entry C", date: dateFormatter.string(from: date))
-		
-		entries = [entryA, entryB, entryC]
     }
 
     // MARK: - Table view data source
@@ -45,8 +41,8 @@ class ListEntryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "entry", for: indexPath)
 
-		cell.textLabel?.text = entries[indexPath.row].title
-		cell.detailTextLabel?.text = entries[indexPath.row].date
+		cell.textLabel?.text = entries[indexPath.row]["title"]
+		cell.detailTextLabel?.text = entries[indexPath.row]["date"]
 		
         return cell
     }
@@ -64,9 +60,34 @@ class ListEntryTableViewController: UITableViewController {
 		return configuration
 	}
 	
-	override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+	override func tableView(_ tableViewHere: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		let renameAction = UIContextualAction(style: .normal, title: nil) { (_, _, completionHandler) in
-            // rename the item here
+            
+			let alert = UIAlertController(title: "Enter the Entry's new title", message: "Give your Entry a new name", preferredStyle: .alert)
+			var storedEntries = UserDefaults.standard.object(forKey: "archive-entries") as? [[String: String]] ?? [[String: String]]()
+			
+			alert.addTextField { (textField) in
+				textField.text = "\(storedEntries[indexPath.row]["title"]!)"
+			}
+			
+			alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+				self.dismiss(animated: true, completion: nil)
+			}))
+			
+			alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
+				if let entryTitle = alert.textFields![0].text {
+					if entryTitle.rangeOfCharacter(from: NSCharacterSet.letters) == nil {
+						storedEntries[indexPath.row]["title"] = "Entry \(storedEntries.count + 1)"
+						UserDefaults.standard.set(storedEntries, forKey: "archive-entries")
+					} else {
+						storedEntries[indexPath.row]["title"] = entryTitle
+						UserDefaults.standard.set(storedEntries, forKey: "archive-entries")
+					}
+				}
+				// MARK: Fazer a atualização do nome aqui de algum jeito
+			}))
+			self.present(alert, animated: true)
+			
             completionHandler(true)
         }
 		
