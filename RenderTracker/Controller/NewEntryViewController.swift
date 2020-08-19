@@ -18,18 +18,6 @@ class NewEntryViewController: UIViewController {
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
-		
-//		let fileURL = getDocumentsDirectory().appendingPathComponent("reference-x.png")
-//		do {
-//			let imageData = try Data(contentsOf: fileURL)
-//			testSaveImage.image = UIImage(data: imageData)
-//		} catch {
-//			print(error)
-//		}
-		
-//		if UserDefaults.standard.object(forKey: "test-image") != nil {
-//			testSaveImage.load(url: UserDefaults.standard.url(forKey: "test-image")!)
-//		}
     }
 	
 	override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
@@ -40,7 +28,8 @@ class NewEntryViewController: UIViewController {
 			if let validSearch = searchBar.text {
 				let formattedSearch = formatSearchTerms(from: validSearch)
 					if formattedSearch.count > 0 {
-						if previousSearch != formattedSearch {
+						self.imageDisplay.isHidden = false
+						if previousSearch != formattedSearch && formattedSearch.rangeOfCharacter(from: NSCharacterSet.letters) != nil {
 							makeSearch(this: formattedSearch)
 							previousSearch = formattedSearch
 						} else if PictureResults.shared.hits!.count > 0 {
@@ -54,42 +43,45 @@ class NewEntryViewController: UIViewController {
 	}
 	
 	@IBAction func newEntryDone(_ sender: Any) {
-//		let date = Date()
-//		let dateFormatter = DateFormatter()
-//		dateFormatter.dateFormat = "dd/MM/yyyy"
-//
-//		let _ = Entry(title: tempEntryName.text!, date: dateFormatter.string(from: date))
 		
-		if let image = imageDisplay.image {
-			if let data = image.pngData() {
-				let filename = getDocumentsDirectory().appendingPathComponent("reference-x.png")
-				try? data.write(to: filename)
-				
-//				var stringedURL = ""
-//				do {
-//					stringedURL = try String(contentsOf: filename)
-//					print("file: \(filename)")
-//					print("string: \(stringedURL)")
-//				} catch {
-//					print(error)
-//				}
-				
-				//let newEntry = Entry(title: "Entry A", date: "10/08/2020", imgReference: filename, imgModel: nil)
-				var storedEntries = UserDefaults.standard.object(forKey: "archive-entries") as? [[String: String]] ?? [[String: String]]()
-				let newEntry = ["title": "Entry \(storedEntries.count + 1)", "date": "19/08/2020", "referenceImg": filename.absoluteString, "modelImg": ""]
-				storedEntries.append(newEntry)
-				UserDefaults.standard.set(storedEntries, forKey: "archive-entries")
-				
-//				print(filename)
-//				do {
-//					let imageData = try Data(contentsOf: filename)
-//					testSaveImage.image = UIImage(data: imageData)
-//				} catch {
-//					print(error)
-//				}
-				//UserDefaults.standard.set(filename, forKey: "test-image")
-			}
+		let alert = UIAlertController(title: "Enter the New Entry's title", message: "Give an unique title to your new entry", preferredStyle: .alert)
+		var storedEntries = UserDefaults.standard.object(forKey: "archive-entries") as? [[String: String]] ?? [[String: String]]()
+		
+		alert.addTextField { (textField) in
+			textField.text = "Entry \(storedEntries.count + 1)"
 		}
+		
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+			self.dismiss(animated: true, completion: nil)
+		}))
+		
+		alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
+			let date = Date()
+			let dateFormatter = DateFormatter()
+			dateFormatter.dateFormat = "dd/MM/yyyy"
+			
+			if let image = self.imageDisplay.image {
+				if let data = image.pngData() {
+					let filename = self.getDocumentsDirectory().appendingPathComponent("reference-x.png")
+					try? data.write(to: filename)
+					
+					if let entryTitle = alert.textFields![0].text {
+						if entryTitle.rangeOfCharacter(from: NSCharacterSet.letters) == nil {
+							let newEntry = ["title": "Entry \(storedEntries.count + 1)", "date": dateFormatter.string(from: date), "referenceImg": filename.absoluteString, "modelImg": ""]
+							storedEntries.append(newEntry)
+							UserDefaults.standard.set(storedEntries, forKey: "archive-entries")
+						} else {
+							let newEntry = ["title": entryTitle, "date": dateFormatter.string(from: date), "referenceImg": filename.absoluteString, "modelImg": ""]
+							storedEntries.append(newEntry)
+							UserDefaults.standard.set(storedEntries, forKey: "archive-entries")
+						}
+					}
+				}
+			}
+			
+			self.imageDisplay.isHidden = true
+		}))
+		self.present(alert, animated: true)
 	}
 	
 	func getDocumentsDirectory() -> URL {
@@ -138,14 +130,11 @@ class NewEntryViewController: UIViewController {
 				} catch {
 					print(error)
 				}
-				//img.load(url: validURL)
-
 			}
 		}
 	}
 	
     /*
-    // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -155,19 +144,3 @@ class NewEntryViewController: UIViewController {
     */
 
 }
-//
-//extension UIImageView {
-//
-//    func load(url: URL) {
-//
-//        DispatchQueue.global().async { [weak self] in
-//            if let data = try? Data(contentsOf: url) {
-//                if let image = UIImage(data: data) {
-//                    DispatchQueue.main.async {
-//                        self?.image = image
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
