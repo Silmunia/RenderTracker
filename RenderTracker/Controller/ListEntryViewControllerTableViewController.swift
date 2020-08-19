@@ -11,25 +11,30 @@ import UIKit
 struct Entry {
 	var title: String
 	var date: String
+	var imgReference: URL
+	var imgModel: URL?
 }
 
 class ListEntryTableViewController: UITableViewController {
 
-	var entries = [Entry]()
-	var newEntry = Entry(title: "", date: "")
+	var entries: [Entry] = []
+	
+	override func viewWillAppear(_ animated: Bool) {
+		entries = UserDefaults.standard.object(forKey: "archive-entries") as? [Entry] ?? [Entry]()
+	}
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-
-		let date = Date()
-		let dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = "dd/MM/yyyy"
 		
-		let entryA = Entry(title: "Entry A", date: dateFormatter.string(from: date))
-		let entryB = Entry(title: "Entry B", date: dateFormatter.string(from: date))
-		let entryC = Entry(title: "Entry C", date: dateFormatter.string(from: date))
-		
-		entries = [entryA, entryB, entryC]
+//		let date = Date()
+//		let dateFormatter = DateFormatter()
+//		dateFormatter.dateFormat = "dd/MM/yyyy"
+//
+//		let entryA = Entry(title: "Entry A", date: dateFormatter.string(from: date))
+//		let entryB = Entry(title: "Entry B", date: dateFormatter.string(from: date))
+//		let entryC = Entry(title: "Entry C", date: dateFormatter.string(from: date))
+//
+//		entries = [entryA, entryB, entryC]
     }
 
     // MARK: - Table view data source
