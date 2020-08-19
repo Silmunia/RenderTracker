@@ -8,21 +8,24 @@
 
 import UIKit
 
-struct Entry {
-	var title: String
-	var date: String
-	var imgReference: URL
-	var imgModel: URL?
-}
+//struct Entry: Codable {
+//	var title: String
+//	var date: String
+//	var imgReference: URL
+//	var imgModel: URL?
+//}
 
 class ListEntryTableViewController: UITableViewController {
 
-	var entries: [Entry] = []
+	var entries: [[String: String]] = []
 	
 	override func viewWillAppear(_ animated: Bool) {
-		entries = UserDefaults.standard.object(forKey: "archive-entries") as? [Entry] ?? [Entry]()
+		entries = UserDefaults.standard.array(forKey: "archive-entries") as? [[String: String]] ?? [[String: String]]()
+		tableView.reloadData()
+		
+		//print(entries)
 	}
-	
+		
     override func viewDidLoad() {
         super.viewDidLoad()
 		
@@ -50,8 +53,8 @@ class ListEntryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "entry", for: indexPath)
 
-		cell.textLabel?.text = entries[indexPath.row].title
-		cell.detailTextLabel?.text = entries[indexPath.row].date
+		cell.textLabel?.text = entries[indexPath.row]["title"]
+		cell.detailTextLabel?.text = entries[indexPath.row]["date"]
 		
         return cell
     }

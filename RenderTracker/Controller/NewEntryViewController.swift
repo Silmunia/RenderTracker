@@ -64,6 +64,22 @@ class NewEntryViewController: UIViewController {
 			if let data = image.pngData() {
 				let filename = getDocumentsDirectory().appendingPathComponent("reference-x.png")
 				try? data.write(to: filename)
+				
+//				var stringedURL = ""
+//				do {
+//					stringedURL = try String(contentsOf: filename)
+//					print("file: \(filename)")
+//					print("string: \(stringedURL)")
+//				} catch {
+//					print(error)
+//				}
+				
+				//let newEntry = Entry(title: "Entry A", date: "10/08/2020", imgReference: filename, imgModel: nil)
+				var storedEntries = UserDefaults.standard.object(forKey: "archive-entries") as? [[String: String]] ?? [[String: String]]()
+				let newEntry = ["title": "Entry \(storedEntries.count + 1)", "date": "19/08/2020", "referenceImg": filename.absoluteString, "modelImg": ""]
+				storedEntries.append(newEntry)
+				UserDefaults.standard.set(storedEntries, forKey: "archive-entries")
+				
 //				print(filename)
 //				do {
 //					let imageData = try Data(contentsOf: filename)
