@@ -62,7 +62,7 @@ class NewEntryViewController: UIViewController {
 			
 			if let image = self.imageDisplay.image {
 				if let data = image.pngData() {
-					let appendName = self.searchBar.text ?? "\(storedEntries.count + 1)"
+					let appendName = UUID().uuidString
 					let filename = self.getDocumentsDirectory().appendingPathComponent("\(appendName).png")
 					try? data.write(to: filename)
 					
