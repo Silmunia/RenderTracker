@@ -19,18 +19,37 @@ class ViewEntryViewController: UIViewController {
 	@IBOutlet weak var editButton: UIBarButtonItem!
 	
 	override func viewWillAppear(_ animated: Bool) {
-		let storedEntries = UserDefaults.standard.object(forKey: "archive-entries") as? [[String: String]] ?? [[String: String]]()
 		let currentEntry = UserDefaults.standard.integer(forKey: "chosen-entry")
+		let storedEntries = UserDefaults.standard.object(forKey: "archive-entries") as? [[String: String]] ?? [[String: String]]()
 		entryTitle.title = storedEntries[currentEntry]["title"]
-		
-		if let unwrapURL = storedEntries[currentEntry]["referenceImg"] {
-			if let validURL = URL(string: unwrapURL) {
-				do {
-					let imageData = try Data(contentsOf: validURL)
-					imageDisplay.image = UIImage(data: imageData)
-				} catch {
-					print(error)
+		if segmentedControl.selectedSegmentIndex == 0 {
+			if let unwrapURL = storedEntries[currentEntry]["referenceImg"] {
+				if let validURL = URL(string: unwrapURL) {
+					do {
+						let imageData = try Data(contentsOf: validURL)
+						imageDisplay.image = UIImage(data: imageData)
+						imageDisplay.isHidden = false
+					} catch {
+						print(error)
+					}
 				}
+			}
+		} else {
+			if let unwrapURL = storedEntries[currentEntry]["modelImg"] {
+				if let validURL = URL(string: unwrapURL) {
+					do {
+						let imageData = try Data(contentsOf: validURL)
+						imageDisplay.image = UIImage(data: imageData)
+						imageDisplay.isHidden = false
+					} catch {
+						print(error)
+						imageDisplay.isHidden = true
+					}
+				} else {
+					imageDisplay.isHidden = true
+				}
+			} else {
+				imageDisplay.isHidden = true
 			}
 		}
 	}
@@ -42,26 +61,37 @@ class ViewEntryViewController: UIViewController {
     }
 	
 	@IBAction func segmentedChange(_ sender: Any) {
+		let currentEntry = UserDefaults.standard.integer(forKey: "chosen-entry")
+		let storedEntries = UserDefaults.standard.object(forKey: "archive-entries") as? [[String: String]] ?? [[String: String]]()
 		if segmentedControl.selectedSegmentIndex == 0 {
-			imageDisplay.isHidden = false
-		} else {
-			imageDisplay.isHidden = true
-		}
-	}
-	
-	func loadPicture(from num: Int, at img: UIImageView) {
-		
-		if let validHits = PictureResults.shared.hits {
-			let imgURL = URL(string: validHits[num].largeImageURL)
-			if let validURL = imgURL {
-				do {
-					let imageData = try Data(contentsOf: validURL)
-					img.image = UIImage(data: imageData)
-				} catch {
-					print(error)
+			if let unwrapURL = storedEntries[currentEntry]["referenceImg"] {
+				if let validURL = URL(string: unwrapURL) {
+					do {
+						let imageData = try Data(contentsOf: validURL)
+						imageDisplay.image = UIImage(data: imageData)
+						imageDisplay.isHidden = false
+					} catch {
+						print(error)
+					}
 				}
+			}
+		} else {
+			if let unwrapURL = storedEntries[currentEntry]["modelImg"] {
+				if let validURL = URL(string: unwrapURL) {
+					do {
+						let imageData = try Data(contentsOf: validURL)
+						imageDisplay.image = UIImage(data: imageData)
+						imageDisplay.isHidden = false
+					} catch {
+						print(error)
+						imageDisplay.isHidden = true
+					}
+				} else {
+					imageDisplay.isHidden = true
+				}
+			} else {
+				imageDisplay.isHidden = true
 			}
 		}
 	}
-
 }

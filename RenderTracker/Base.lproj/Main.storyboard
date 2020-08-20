@@ -91,7 +91,7 @@
                     <navigationItem key="navigationItem" title="Entry Title" largeTitleDisplayMode="always" id="Szh-on-knK">
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="sSx-P5-7dv">
                             <connections>
-                                <segue destination="Ljv-qX-dcq" kind="show" id="6lm-mZ-sIO"/>
+                                <segue destination="UBQ-UL-ACE" kind="show" id="qRV-fy-ubp"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -105,6 +105,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j5v-wO-Iem" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="879.71014492753625" y="783.48214285714278"/>
+        </scene>
+        <!--Editing Model-->
+        <scene sceneID="89X-Qf-Svf">
+            <objects>
+                <viewController id="UBQ-UL-ACE" customClass="EditModelViewController" customModule="RenderTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nUg-Yw-Wdb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="tQJ-pb-aDe"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Editing Model" id="gHd-hA-YYI"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XkD-AG-hb8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="880" y="1513"/>
         </scene>
         <!--Editing Reference-->
         <scene sceneID="UYd-Sf-qTB">

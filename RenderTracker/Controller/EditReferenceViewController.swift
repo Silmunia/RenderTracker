@@ -129,7 +129,6 @@ class EditReferenceViewController: UIViewController {
 			}
 		}
 	}
-    
     /*
     // MARK: - Navigation
 
