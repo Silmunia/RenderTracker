@@ -64,7 +64,7 @@
         <!--Entry Title-->
         <scene sceneID="h9B-7b-rYE">
             <objects>
-                <viewController id="mLD-2h-9zv" sceneMemberID="viewController">
+                <viewController id="mLD-2h-9zv" customClass="ViewEntryViewController" customModule="RenderTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BVE-29-Oeo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -80,6 +80,9 @@
                                     <segment title="Reference"/>
                                     <segment title="Model"/>
                                 </segments>
+                                <connections>
+                                    <action selector="segmentedChange:" destination="mLD-2h-9zv" eventType="valueChanged" id="0pb-4N-YEU"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -88,6 +91,12 @@
                     <navigationItem key="navigationItem" title="Entry Title" largeTitleDisplayMode="always" id="Szh-on-knK">
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="sSx-P5-7dv"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="editButton" destination="sSx-P5-7dv" id="qDh-OL-z3q"/>
+                        <outlet property="entryTitle" destination="Szh-on-knK" id="pDC-Q5-mwh"/>
+                        <outlet property="imageDisplay" destination="9Yp-Mr-GMl" id="y14-N5-3sq"/>
+                        <outlet property="segmentedControl" destination="LYt-yq-Mpz" id="mBs-Ro-V7X"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j5v-wO-Iem" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

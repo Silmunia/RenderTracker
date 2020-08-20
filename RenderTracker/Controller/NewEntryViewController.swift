@@ -13,7 +13,7 @@ class NewEntryViewController: UIViewController {
 	@IBOutlet weak var searchBar: UISearchBar!
 	
 	@IBOutlet weak var imageDisplay: UIImageView!
-	
+		
 	var previousSearch: String?
 	
 	override func viewDidLoad() {
@@ -62,7 +62,8 @@ class NewEntryViewController: UIViewController {
 			
 			if let image = self.imageDisplay.image {
 				if let data = image.pngData() {
-					let filename = self.getDocumentsDirectory().appendingPathComponent("reference-x.png")
+					let appendName = self.searchBar.text ?? "\(storedEntries.count + 1)"
+					let filename = self.getDocumentsDirectory().appendingPathComponent("\(appendName).png")
 					try? data.write(to: filename)
 					
 					if let entryTitle = alert.textFields![0].text {
@@ -122,8 +123,7 @@ class NewEntryViewController: UIViewController {
 	func loadPicture(from num: Int, at img: UIImageView) {
 		
 		if let validHits = PictureResults.shared.hits {
-			let imgURL = URL(string: validHits[num].largeImageURL)
-			if let validURL = imgURL {
+			if let validURL = URL(string: validHits[num].largeImageURL) {
 				do {
 					let imageData = try Data(contentsOf: validURL)
 					img.image = UIImage(data: imageData)

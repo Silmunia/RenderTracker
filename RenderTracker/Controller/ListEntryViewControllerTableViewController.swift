@@ -49,8 +49,11 @@ class ListEntryTableViewController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
+			
 			self.entries.remove(at: indexPath.row)
 			tableView.deleteRows(at: [indexPath], with: .fade)
+			UserDefaults.standard.set(self.entries, forKey: "archive-entries")
+			
             completionHandler(true)
         }
 		
@@ -95,5 +98,9 @@ class ListEntryTableViewController: UITableViewController {
 		renameAction.backgroundColor = .systemBlue
 		let configuration = UISwipeActionsConfiguration(actions: [renameAction])
 		return configuration
+	}
+	
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		UserDefaults.standard.set(indexPath.row, forKey: "chosen-entry")
 	}
 }
