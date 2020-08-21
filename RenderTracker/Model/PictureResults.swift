@@ -21,20 +21,6 @@ class PictureResults: Codable {
     var total: Int?
     var totalHits: Int?
     var hits: [PictureData]?
-	
-	// MARK: Test Print Data
-	
-	func testPrintData() {
-		
-		if let validHits = hits {
-			let rand = validHits[Int.random(in: 0..<validHits.count)]
-			print("""
-				Total Hits: \(String(describing: total))
-				Image ID: \(rand.id)
-				Image URL: \(rand.largeImageURL)
-			""")
-		}
-	}
 }
 
 /* MARK: API JSON Reference

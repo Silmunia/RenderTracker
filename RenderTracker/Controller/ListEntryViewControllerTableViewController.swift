@@ -16,16 +16,19 @@ import UIKit
 //}
 
 class ListEntryTableViewController: UITableViewController {
-
+	
 	var entries: [[String: String]] = []
 	
 	override func viewWillAppear(_ animated: Bool) {
 		entries = UserDefaults.standard.array(forKey: "archive-entries") as? [[String: String]] ?? [[String: String]]()
 		tableView.reloadData()
+		
 	}
 		
     override func viewDidLoad() {
         super.viewDidLoad()
+		self.tableView.tableFooterView = UIView()
+		
     }
 
     // MARK: - Table view data source
