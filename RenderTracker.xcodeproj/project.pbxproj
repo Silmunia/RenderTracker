@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		9249084024EEA6EE0024B7A6 /* ViewEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9249083F24EEA6EE0024B7A6 /* ViewEntryViewController.swift */; };
 		9249084224EEAC2F0024B7A6 /* EditReferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9249084124EEAC2F0024B7A6 /* EditReferenceViewController.swift */; };
-		9249084424EEB4A70024B7A6 /* EditModelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9249084324EEB4A70024B7A6 /* EditModelViewController.swift */; };
 		92A5315424E5A2DF00EC8639 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5315324E5A2DF00EC8639 /* AppDelegate.swift */; };
 		92A5315624E5A2DF00EC8639 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5315524E5A2DF00EC8639 /* SceneDelegate.swift */; };
 		92A5315B24E5A2DF00EC8639 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92A5315924E5A2DF00EC8639 /* Main.storyboard */; };
@@ -44,7 +43,6 @@
 /* Begin PBXFileReference section */
 		9249083F24EEA6EE0024B7A6 /* ViewEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewEntryViewController.swift; sourceTree = "<group>"; };
 		9249084124EEAC2F0024B7A6 /* EditReferenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReferenceViewController.swift; sourceTree = "<group>"; };
-		9249084324EEB4A70024B7A6 /* EditModelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModelViewController.swift; sourceTree = "<group>"; };
 		92A5315024E5A2DF00EC8639 /* RenderTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RenderTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92A5315324E5A2DF00EC8639 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92A5315524E5A2DF00EC8639 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -168,7 +166,6 @@
 				92DEB9B524EACE220083E7ED /* NewEntryViewController.swift */,
 				9249083F24EEA6EE0024B7A6 /* ViewEntryViewController.swift */,
 				9249084124EEAC2F0024B7A6 /* EditReferenceViewController.swift */,
-				9249084324EEB4A70024B7A6 /* EditModelViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -333,7 +330,6 @@
 				9249084024EEA6EE0024B7A6 /* ViewEntryViewController.swift in Sources */,
 				92A5315424E5A2DF00EC8639 /* AppDelegate.swift in Sources */,
 				92A5315624E5A2DF00EC8639 /* SceneDelegate.swift in Sources */,
-				9249084424EEB4A70024B7A6 /* EditModelViewController.swift in Sources */,
 				92DEB9B624EACE220083E7ED /* NewEntryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

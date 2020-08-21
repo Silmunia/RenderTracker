@@ -13,11 +13,16 @@ class NewEntryViewController: UIViewController {
 	@IBOutlet weak var searchBar: UISearchBar!
 	
 	@IBOutlet weak var imageDisplay: UIImageView!
-		
+	
+	@IBOutlet weak var emptyMessage: UIView!
+	
+	var previousPicture: Int = 0
+	
 	var previousSearch: String?
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
+		emptyMessage.isHidden = false
     }
 	
 	override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
@@ -27,15 +32,22 @@ class NewEntryViewController: UIViewController {
 		case .keyboardReturnOrEnter:
 			if let validSearch = searchBar.text {
 				let formattedSearch = formatSearchTerms(from: validSearch)
-					if formattedSearch.count > 0 {
-						self.imageDisplay.isHidden = false
-						if previousSearch != formattedSearch && formattedSearch.rangeOfCharacter(from: NSCharacterSet.letters) != nil {
-							makeSearch(this: formattedSearch)
-							previousSearch = formattedSearch
-						} else if PictureResults.shared.hits!.count > 0 {
-							loadPicture(from: Int.random(in: 0..<PictureResults.shared.hits!.count), at: imageDisplay)
+				if formattedSearch.count > 0 {
+					self.imageDisplay.isHidden = false
+					if previousSearch != formattedSearch && formattedSearch.rangeOfCharacter(from: NSCharacterSet.letters) != nil {
+						makeSearch(this: formattedSearch)
+						previousSearch = formattedSearch
+						loadPicture(from: previousPicture, at: imageDisplay)
+					} else if PictureResults.shared.hits!.count > 0 {
+						previousPicture += 1
+						
+						if previousPicture >= PictureResults.shared.hits!.count {
+							previousPicture = 0
 						}
+						
+						loadPicture(from: previousPicture, at: imageDisplay)
 					}
+				}
 			}
 		default:
 			super.pressesEnded(presses, with: event)
@@ -92,7 +104,14 @@ class NewEntryViewController: UIViewController {
 	
 	@IBAction func refreshSearch(_ sender: Any) {
 		if previousSearch != nil {
-			loadPicture(from: Int.random(in: 0..<PictureResults.shared.hits!.count), at: imageDisplay)
+			
+			previousPicture += 1
+			
+			if previousPicture >= PictureResults.shared.hits!.count {
+				previousPicture = 0
+			}
+			
+			loadPicture(from: previousPicture, at: imageDisplay)
 		}
 	}
 	
@@ -117,7 +136,6 @@ class NewEntryViewController: UIViewController {
 		
 		let imageAPI = PictureAPI()
 		imageAPI.pictureSearch(this: str)
-		loadPicture(from: Int.random(in: 0..<PictureResults.shared.hits!.count), at: imageDisplay)
 	}
 	
 	func loadPicture(from num: Int, at img: UIImageView) {
@@ -132,6 +150,8 @@ class NewEntryViewController: UIViewController {
 				}
 			}
 		}
+		
+		emptyMessage.isHidden = true
 	}
 	
     /*

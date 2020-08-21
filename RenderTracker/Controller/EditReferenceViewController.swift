@@ -14,10 +14,15 @@ class EditReferenceViewController: UIViewController {
 	
 	@IBOutlet weak var imageDisplay: UIImageView!
 		
+	@IBOutlet weak var emptyMessage: UIView!
+	
 	var previousSearch: String?
+	
+	var previousPicture: Int = 0
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
+		emptyMessage.isHidden = false
     }
 	
 	override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
@@ -33,7 +38,13 @@ class EditReferenceViewController: UIViewController {
 							makeSearch(this: formattedSearch)
 							previousSearch = formattedSearch
 						} else if PictureResults.shared.hits!.count > 0 {
-							loadPicture(from: Int.random(in: 0..<PictureResults.shared.hits!.count), at: imageDisplay)
+							previousPicture += 1
+							
+							if previousPicture >= PictureResults.shared.hits!.count {
+								previousPicture = 0
+							}
+							
+							loadPicture(from: previousPicture, at: imageDisplay)
 						}
 					}
 			}
@@ -73,11 +84,13 @@ class EditReferenceViewController: UIViewController {
 					
 					storedEntries[currentEntry]["referenceImg"] = filename.absoluteString
 					UserDefaults.standard.set(storedEntries, forKey: "archive-entries")
+					
 				}
 			}
 			
 			self.imageDisplay.isHidden = true
 		}))
+		
 		self.present(alert, animated: true)
 	}
 	
@@ -88,7 +101,14 @@ class EditReferenceViewController: UIViewController {
 	
 	@IBAction func refreshSearch(_ sender: Any) {
 		if previousSearch != nil {
-			loadPicture(from: Int.random(in: 0..<PictureResults.shared.hits!.count), at: imageDisplay)
+			
+			previousPicture += 1
+			
+			if previousPicture >= PictureResults.shared.hits!.count {
+				previousPicture = 0
+			}
+			
+			loadPicture(from: previousPicture, at: imageDisplay)
 		}
 	}
 	
@@ -113,7 +133,7 @@ class EditReferenceViewController: UIViewController {
 		
 		let imageAPI = PictureAPI()
 		imageAPI.pictureSearch(this: str)
-		loadPicture(from: Int.random(in: 0..<PictureResults.shared.hits!.count), at: imageDisplay)
+		loadPicture(from: previousPicture, at: imageDisplay)
 	}
 	
 	func loadPicture(from num: Int, at img: UIImageView) {
@@ -128,6 +148,8 @@ class EditReferenceViewController: UIViewController {
 				}
 			}
 		}
+		
+		emptyMessage.isHidden = true
 	}
     /*
     // MARK: - Navigation
