@@ -8,13 +8,15 @@
 
 import UIKit
 
-class NewEntryViewController: UIViewController {
+class NewEntryViewController: UIViewController, UISearchBarDelegate {
 
-	@IBOutlet weak var searchBar: UISearchBar!
+	@IBOutlet weak var search: UISearchBar!
 	
 	@IBOutlet weak var imageDisplay: UIImageView!
 	
 	@IBOutlet weak var emptyMessage: UIView!
+	
+	@IBOutlet weak var toolBar: UIToolbar!
 	
 	var previousPicture: Int = 0
 	
@@ -22,35 +24,31 @@ class NewEntryViewController: UIViewController {
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
+		search.delegate = self
 		emptyMessage.isHidden = false
+		toolBar.isHidden = true
     }
 	
-	override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-		guard let key = presses.first?.key else { return }
-
-		switch key.keyCode {
-		case .keyboardReturnOrEnter:
-			if let validSearch = searchBar.text {
-				let formattedSearch = formatSearchTerms(from: validSearch)
-				if formattedSearch.count > 0 {
-					self.imageDisplay.isHidden = false
-					if previousSearch != formattedSearch && formattedSearch.rangeOfCharacter(from: NSCharacterSet.letters) != nil {
-						makeSearch(this: formattedSearch)
-						previousSearch = formattedSearch
-						loadPicture(from: previousPicture, at: imageDisplay)
-					} else if PictureResults.shared.hits!.count > 0 {
-						previousPicture += 1
-						
-						if previousPicture >= PictureResults.shared.hits!.count {
-							previousPicture = 0
-						}
-						
-						loadPicture(from: previousPicture, at: imageDisplay)
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+		if let validSearch = search.text {
+			let formattedSearch = formatSearchTerms(from: validSearch)
+			if formattedSearch.count > 0 {
+				self.imageDisplay.isHidden = false
+				self.toolBar.isHidden = false
+				if previousSearch != formattedSearch && formattedSearch.rangeOfCharacter(from: NSCharacterSet.letters) != nil {
+					makeSearch(this: formattedSearch)
+					previousSearch = formattedSearch
+					loadPicture(from: previousPicture, at: imageDisplay)
+				} else if PictureResults.shared.hits!.count > 0 {
+					previousPicture += 1
+					
+					if previousPicture >= PictureResults.shared.hits!.count {
+						previousPicture = 0
 					}
+					
+					loadPicture(from: previousPicture, at: imageDisplay)
 				}
 			}
-		default:
-			super.pressesEnded(presses, with: event)
 		}
 	}
 	
@@ -91,7 +89,7 @@ class NewEntryViewController: UIViewController {
 					}
 				}
 			}
-			
+			self.toolBar.isHidden = true
 			self.imageDisplay.isHidden = true
 		}))
 		self.present(alert, animated: true)
@@ -150,7 +148,8 @@ class NewEntryViewController: UIViewController {
 				}
 			}
 		}
-		
+		search.resignFirstResponder()
+		toolBar.isHidden = false
 		emptyMessage.isHidden = true
 	}
 	

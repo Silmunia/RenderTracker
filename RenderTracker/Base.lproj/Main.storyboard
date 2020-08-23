@@ -164,7 +164,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" placeholder="Search Terms" translatesAutoresizingMaskIntoConstraints="NO" id="PfZ-oS-4io">
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Terms" translatesAutoresizingMaskIntoConstraints="NO" id="PfZ-oS-4io">
                                 <rect key="frame" x="0.0" y="88" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
@@ -175,7 +175,7 @@
                                 </constraints>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ivo-UT-2zg">
-                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
+                                <rect key="frame" x="0.0" y="818" width="414" height="44"/>
                                 <items>
                                     <barButtonItem systemItem="refresh" id="EiX-Bd-GRh">
                                         <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -246,7 +246,8 @@
                     <connections>
                         <outlet property="emptyMessage" destination="ERK-vH-UIM" id="nkF-r7-sUE"/>
                         <outlet property="imageDisplay" destination="fe9-mB-TZT" id="jja-PZ-F5k"/>
-                        <outlet property="searchBar" destination="PfZ-oS-4io" id="coA-Wm-RWJ"/>
+                        <outlet property="search" destination="PfZ-oS-4io" id="T3f-7D-Ikr"/>
+                        <outlet property="toolBar" destination="ivo-UT-2zg" id="nd5-QE-RGo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yNt-nn-on9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -262,13 +263,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SvR-dP-YSw">
-                                <rect key="frame" x="35" y="263" width="345" height="371"/>
+                                <rect key="frame" x="35" y="258" width="345" height="371"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="SvR-dP-YSw" secondAttribute="height" multiplier="345:371" id="39b-tG-IJw"/>
                                 </constraints>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FU5-qa-bcE">
-                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
+                                <rect key="frame" x="0.0" y="818" width="414" height="44"/>
                                 <items>
                                     <barButtonItem systemItem="refresh" id="cdQ-we-XFW">
                                         <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -311,7 +312,7 @@
                                     <constraint firstAttribute="width" secondItem="Pfb-zU-0yB" secondAttribute="height" multiplier="345:371" id="rV9-M8-tXN"/>
                                 </constraints>
                             </view>
-                            <searchBar contentMode="redraw" placeholder="Search Terms" translatesAutoresizingMaskIntoConstraints="NO" id="wlE-2e-bY8">
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Terms" translatesAutoresizingMaskIntoConstraints="NO" id="wlE-2e-bY8">
                                 <rect key="frame" x="0.0" y="145" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
@@ -326,9 +327,9 @@
                             <constraint firstItem="SvR-dP-YSw" firstAttribute="leading" secondItem="cPx-5b-SxO" secondAttribute="leading" constant="35" id="Sqj-pe-w9z"/>
                             <constraint firstItem="wlE-2e-bY8" firstAttribute="leading" secondItem="cPx-5b-SxO" secondAttribute="leading" id="WAy-6a-SyE"/>
                             <constraint firstItem="FU5-qa-bcE" firstAttribute="bottom" secondItem="cPx-5b-SxO" secondAttribute="bottom" id="X6Z-ib-zPz"/>
+                            <constraint firstItem="SvR-dP-YSw" firstAttribute="top" secondItem="wlE-2e-bY8" secondAttribute="bottom" constant="57" id="iMm-GD-jLi"/>
                             <constraint firstItem="FU5-qa-bcE" firstAttribute="trailing" secondItem="cPx-5b-SxO" secondAttribute="trailing" id="ncQ-oB-Jrx"/>
                             <constraint firstItem="cPx-5b-SxO" firstAttribute="trailing" secondItem="SvR-dP-YSw" secondAttribute="trailing" constant="34" id="q3Q-U3-cXp"/>
-                            <constraint firstItem="SvR-dP-YSw" firstAttribute="top" secondItem="wlE-2e-bY8" secondAttribute="bottom" constant="62" id="tLi-ux-HYH"/>
                             <constraint firstItem="cPx-5b-SxO" firstAttribute="trailing" secondItem="Pfb-zU-0yB" secondAttribute="trailing" constant="34" id="yPU-A2-Hgj"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="cPx-5b-SxO"/>
@@ -337,7 +338,8 @@
                     <connections>
                         <outlet property="emptyMessage" destination="Pfb-zU-0yB" id="tH6-0n-oj2"/>
                         <outlet property="imageDisplay" destination="SvR-dP-YSw" id="mse-so-lHh"/>
-                        <outlet property="searchBar" destination="wlE-2e-bY8" id="v53-r5-hNU"/>
+                        <outlet property="search" destination="wlE-2e-bY8" id="aWR-ai-atp"/>
+                        <outlet property="toolBar" destination="FU5-qa-bcE" id="Rqw-IY-e93"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="djc-2z-6E9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
