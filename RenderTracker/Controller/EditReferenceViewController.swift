@@ -51,35 +51,6 @@ class EditReferenceViewController: UIViewController, UISearchBarDelegate {
 		}
 	}
 	
-//	override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-//		guard let key = presses.first?.key else { return }
-//
-//		switch key.keyCode {
-//		case .keyboardReturnOrEnter:
-//			if let validSearch = search.text {
-//				let formattedSearch = formatSearchTerms(from: validSearch)
-//					if formattedSearch.count > 0 {
-//						self.imageDisplay.isHidden = false
-//						self.toolBar.isHidden = false
-//						if previousSearch != formattedSearch && formattedSearch.rangeOfCharacter(from: NSCharacterSet.letters) != nil {
-//							makeSearch(this: formattedSearch)
-//							previousSearch = formattedSearch
-//						} else if PictureResults.shared.hits!.count > 0 {
-//							previousPicture += 1
-//
-//							if previousPicture >= PictureResults.shared.hits!.count {
-//								previousPicture = 0
-//							}
-//
-//							loadPicture(from: previousPicture, at: imageDisplay)
-//						}
-//					}
-//			}
-//		default:
-//			super.pressesEnded(presses, with: event)
-//		}
-//	}
-	
 	@IBAction func newEntryDone(_ sender: Any) {
 		
 		let alert = UIAlertController(title: "Changing the Entry's Reference", message: "This change can't be undone later", preferredStyle: .alert)
